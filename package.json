@@ -1,20 +1,21 @@
 {
-  "name": "create-project",
-  "version": "1.0.0",
+  "name": "@cahcommercial/create-project",
+  "version": "1.0.1",
   "description": "A npm init command for seeding a project",
   "bin": "init.js",  
   "files": [
     "lib",
     "!**/*.spec.js",
-    "vscode/settings.json",
-    "vscode/extensions.json",
-    "eslintrc.json",
-    "prettierrc.json"
+    "vscode",    
+    "tsconfig.json"
   ],
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/cahcommercial/create-project.git"    
-  },  
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "keywords": [],
   "scripts": {
     "commitlint": "commitlint -f $(git rev-list --tags --max-count=1) -t $(git log --pretty=%H | head -1)",
