@@ -1,29 +1,17 @@
 {
   "files.autoSave": "onFocusChange",
-  "eslint.autoFixOnSave": true,
   "eslint.validate": [
-    {
-      "autoFix": true,
-      "language": "javascript"
-    },
-    {
-      "autoFix": true,
-      "language": "javascriptreact"
-    },    
-    {
-      "autoFix": true,
-      "language": "typescript"
-    },
-    {
-      "autoFix": true,
-      "language": "typescriptreact"
-    }
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
   ],
   "[javascript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascriptreact]": {
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
@@ -31,7 +19,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"    
   },
   "[typescriptreact]": {
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"    
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }
-

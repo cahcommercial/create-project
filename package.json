@@ -1,6 +1,6 @@
 {
   "name": "@cahcommercial/create-project",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A npm init command for seeding a project",
   "bin": "init.js",  
   "files": [
