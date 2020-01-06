@@ -1,17 +1,15 @@
 {
   "name": "@cahcommercial/create-project",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A npm init command for seeding a project",
-  "bin": "init.js",  
+  "bin": "init.js",
   "files": [
     "lib",
-    "!**/*.spec.js",
-    "vscode",    
-    "tsconfig.json"
+    "!**/*.spec.js"
   ],
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/cahcommercial/create-project.git"    
+    "url": "ssh://git@github.com/cahcommercial/create-project.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -88,19 +86,22 @@
       ]
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "minimist": "^1.2.0"
+  },
   "devDependencies": {
-    "@commitlint/cli": "^8.2.0",
-    "@commitlint/config-angular": "^8.2.0",
-    "@types/jest": "^24.0.23",
-    "@typescript-eslint/eslint-plugin": "^2.11.0",
-    "@typescript-eslint/parser": "^2.11.0",
-    "concurrently": "^5.0.1",
-    "eslint": "^6.7.2",
-    "eslint-config-prettier": "~6.7.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "@commitlint/cli": "^8.3.4",
+    "@commitlint/config-angular": "^8.3.4",
+    "@types/jest": "^24.0.25",
+    "@types/minimist": "^1.2.0",
+    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "@typescript-eslint/parser": "^2.14.0",
+    "concurrently": "^5.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "~6.9.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   }
 }

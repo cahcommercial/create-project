@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { readFileSync, writeFileSync, mkdirSync } from 'fs'
 import { join, resolve, basename } from 'path'
+import parseArgv = require('minimist')
 import { spawn } from 'child_process'
 
-const pkgDir = resolve(__dirname, '..')
-const isRoot = process.argv.includes('--root')
-
-const readJson = (file: string): JSON => JSON.parse(readFileSync(join(pkgDir, file), 'utf-8')),
-  cpfPackageJson = readJson('package.json') as any,
+const pkgDir = resolve(__dirname, '..'),
+  args = parseArgv(process.argv),
+  isRoot = args.root,
+  project = args._[2],
+  readJson = (file: string): JSON => JSON.parse(readFileSync(join(pkgDir, file), 'utf-8')),
+  pkgJson = readJson('package.json') as any,
   tsconfigJson = readJson('tsconfig.json'),
   vsCodeExtensions = readJson('vscode/extentions.json'),
   vsCodeSettings = readJson('vscode/settings.json'),
   license = readFileSync(join(pkgDir, 'LICENSE'), 'utf-8').replace('2019', new Date().getFullYear().toString())
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let outPkg: any = {}
 
 try {
@@ -22,18 +23,21 @@ try {
   void e
 }
 
-outPkg.name = outPkg.name || basename(process.cwd())
+const devDeps = Object.assign({}, outPkg.devDependencies, pkgJson.devDependencies)
+delete devDeps['@types/minimist']
+
+Object.assign(outPkg, 'private' in outPkg ? { private: outPkg.private } : {})
+outPkg.name = outPkg.name || project || basename(process.cwd())
 outPkg.version = outPkg.version || '0.0.1'
-outPkg.scripts = cpfPackageJson.scripts
-outPkg.devDependencies = cpfPackageJson.devDependencies
-outPkg.files = ['lib', '!**/*.spec.js']
-outPkg.jest = cpfPackageJson.jest
-outPkg.commitlint = cpfPackageJson.commitlint
+outPkg.scripts = pkgJson.scripts
+outPkg.devDependencies = devDeps
+outPkg.files = ['lib', '!**/*.spec.js'].concat(outPkg.files || [])
+outPkg.jest = pkgJson.jest
+outPkg.commitlint = pkgJson.commitlint
 outPkg.main = `lib/${outPkg.name}`
 outPkg.license = outPkg.license || 'MIT'
-outPkg.private = true
-outPkg.eslintConfig = cpfPackageJson.eslintConfig
-outPkg.prettier = cpfPackageJson.pretter
+outPkg.eslintConfig = pkgJson.eslintConfig
+outPkg.prettier = pkgJson.prettier
 
 function tryAction(fn: any): void {
   try {
@@ -44,10 +48,9 @@ function tryAction(fn: any): void {
 }
 
 let cwd = process.cwd()
-const arg1 = process.argv[2]
-if (arg1) {
-  cwd = resolve(cwd, arg1)
-  console.log('Creating project directory: ' + arg1)
+if (project) {
+  cwd = resolve(cwd, project)
+  console.log('Creating project directory: ' + project)
   tryAction(() => mkdirSync(cwd))
 } else {
   console.log('Creating project in current directory')
