@@ -27,17 +27,18 @@ const devDeps = Object.assign({}, outPkg.devDependencies, pkgJson.devDependencie
 delete devDeps['@types/minimist']
 
 Object.assign(outPkg, 'private' in outPkg ? { private: outPkg.private } : {})
+
 outPkg.name = outPkg.name || project || basename(process.cwd())
 outPkg.version = outPkg.version || '0.0.1'
+outPkg.license = outPkg.license || 'MIT'
+outPkg.main = outPkg.main || `lib/${outPkg.name}`
+outPkg.files = ['lib', '!**/*.spec.js'].concat(outPkg.files || [])
 outPkg.scripts = pkgJson.scripts
 outPkg.devDependencies = devDeps
-outPkg.files = ['lib', '!**/*.spec.js'].concat(outPkg.files || [])
 outPkg.jest = pkgJson.jest
-outPkg.commitlint = pkgJson.commitlint
-outPkg.main = `lib/${outPkg.name}`
-outPkg.license = outPkg.license || 'MIT'
-outPkg.eslintConfig = pkgJson.eslintConfig
 outPkg.prettier = pkgJson.prettier
+outPkg.eslintConfig = pkgJson.eslintConfig
+outPkg.commitlint = pkgJson.commitlint
 
 function tryAction(fn: any): void {
   try {
