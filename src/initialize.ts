@@ -34,11 +34,20 @@ outPkg.license = outPkg.license || 'MIT'
 outPkg.main = outPkg.main || `lib/${outPkg.name}`
 outPkg.files = ['lib', '!**/*.spec.js'].concat(outPkg.files || [])
 outPkg.scripts = pkgJson.scripts
+
 outPkg.devDependencies = devDeps
 outPkg.jest = pkgJson.jest
 outPkg.prettier = pkgJson.prettier
 outPkg.eslintConfig = pkgJson.eslintConfig
 outPkg.commitlint = pkgJson.commitlint
+
+if (!isRoot) {
+  delete outPkg.scripts.commitlint
+  outPkg.scripts.prepublishOnly = outPkg.scripts.prepublishOnly.replace(' && npm run commitlint', '')
+  delete outPkg.commitlint
+  delete outPkg.devDependencies['@commitlint/cli']
+  delete outPkg.devDependencies['@commitlint/config-angular']
+}
 
 function tryAction(fn: any): void {
   try {
