@@ -34,12 +34,12 @@ outPkg.license = outPkg.license || 'MIT'
 outPkg.main = outPkg.main || `lib/${outPkg.name}`
 outPkg.files = ['lib', '!**/*.spec.js'].concat(outPkg.files || [])
 outPkg.scripts = pkgJson.scripts
-
+outPkg.dependencies = outPkg.dependencies || []
 outPkg.devDependencies = devDeps
 outPkg.jest = pkgJson.jest
 outPkg.prettier = pkgJson.prettier
-outPkg.eslintConfig = pkgJson.eslintConfig
 outPkg.commitlint = pkgJson.commitlint
+outPkg.eslintConfig = pkgJson.eslintConfig
 
 if (!isRoot) {
   delete outPkg.scripts.commitlint
